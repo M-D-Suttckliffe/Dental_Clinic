@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,6 +24,8 @@ namespace Dental_Clinic.Models
         [DataType(DataType.Date)]
         public DateTime birthday { get; set; }
 
+        [ValidateNever]
+        [DisplayName("Должность")]
         public Post Post { get; set; } = null!;
         public List<ServicesProvided> ServicesProvideds { get; set; } = new List<ServicesProvided>();
     }
