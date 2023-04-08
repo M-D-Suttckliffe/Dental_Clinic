@@ -1,15 +1,27 @@
 using Dental_Clinic.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+string DecryptConnectionString()
+{
+
+    Byte[] b = Convert.FromBase64String(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+    string decryptedConnectionString = System.Text.ASCIIEncoding.ASCII.GetString(b);
+
+    return decryptedConnectionString;
+
+}
+
 // Register ApplicationDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(DecryptConnectionString());
 });
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
