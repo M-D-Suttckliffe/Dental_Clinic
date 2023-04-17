@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dental_Clinic.Models.Doctor>
+﻿@model IEnumerable<Dental_Clinic.Models.Patient>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,15 +7,12 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Создать новую</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.fullName)
-            </th>
-            @*<th>
                 @Html.DisplayNameFor(model => model.surName)
             </th>
             <th>
@@ -23,12 +20,18 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.middleName)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.birthday)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Post)
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
             </th>
             <th></th>
         </tr>
@@ -37,9 +40,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.fullName)
-            </td>
-            @*<td>
                 @Html.DisplayFor(modelItem => item.surName)
             </td>
             <td>
@@ -47,17 +47,23 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.middleName)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.birthday)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Post.postName)
+                @Html.DisplayFor(modelItem => item.gender)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Обновить</a> |
-                @*<a asp-action="Details" asp-route-id="@item.id">Details</a> |*@
-                <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
 }
