@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Dental_Clinic.Models.ServicesProvided>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Создать</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Visit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MedService)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Visit.dateVisit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedService.name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Обновить</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

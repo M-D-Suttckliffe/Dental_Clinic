@@ -23,10 +23,11 @@ namespace Dental_Clinic.Models
         [DisplayName("День Рождения")]
         [DataType(DataType.Date)]
         public DateTime birthday { get; set; }
-
+        [ValidateNever]
+        public bool isDeleted { get; set; }
         [ValidateNever]
         [DisplayName("Должность")]
         public Post Post { get; set; } = null!;
-        public List<ServicesProvided> ServicesProvideds { get; set; } = new List<ServicesProvided>();
+        public List<Visit> Visits { get; set; } = new List<Visit>();
     }
 }

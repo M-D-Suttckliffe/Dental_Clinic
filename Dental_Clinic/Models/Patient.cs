@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dental_Clinic.Models
@@ -20,12 +21,16 @@ namespace Dental_Clinic.Models
         public DateTime birthday { get; set; }
         [DisplayName("Пол")]
         public Int16 gender { get; set; }
+        [ValidateNever]
+        [DisplayName("Пол")]
+        public string genderName => gender == 0 ? "Мужской" : gender == 1 ? "Женский": "Не указано";
         [DisplayName("Телефон")]
         [DataType(DataType.PhoneNumber)]
         public string phoneNumber { get; set; } = null!;
         [DisplayName("Адрес")]
         public string address { get; set; } = null!;
-
+        [ValidateNever]
+        public bool isDeleted { get; set; }
         public List<Visit> Visits { get; set; } = new List<Visit>();
     }
 }

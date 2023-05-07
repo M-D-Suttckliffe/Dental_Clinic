@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dental_Clinic.Models
@@ -12,6 +13,8 @@ namespace Dental_Clinic.Models
         [DisplayName("Цена")]
         [UIHint("Boolean")]
         public Boolean recipeCheck { get; set; }
+        [ValidateNever]
+        public bool isDeleted { get; set; }
 
         public List<ListPrepforTreatment> ListPrepforTreatments = new List<ListPrepforTreatment>();
     }

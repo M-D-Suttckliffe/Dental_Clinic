@@ -7,75 +7,72 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
-using System.Numerics;
 
 namespace Dental_Clinic.Controllers
 {
-    public class DoctorsController : Controller
+    public class MedicationsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DoctorsController(ApplicationDbContext context)
+        public MedicationsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Doctors
+        // GET: Medications
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Doctors.Where(d => d.isDeleted == false).Include(d => d.Post);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.Medications != null ?
+                        View(await _context.Medications.Where(m => m.isDeleted == false).ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Medications'  is null.");
         }
 
-        // GET: Doctors/Create
+        // GET: Medications/Create
         public IActionResult Create()
         {
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName");
             return View();
         }
 
-        // POST: Doctors/Create
+        // POST: Medications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,surName,name,middleName,Postid,birthday")] Doctor doctor)
+        public async Task<IActionResult> Create([Bind("id,name,recipeCheck")] Medication medication)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(doctor);
+                _context.Add(medication);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(medication);
         }
 
-        // GET: Doctors/Edit/5
+        // GET: Medications/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Doctors == null)
+            if (id == null || _context.Medications == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor == null)
+            var medication = await _context.Medications.FindAsync(id);
+            if (medication == null)
             {
                 return NotFound();
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(medication);
         }
 
-        // POST: Doctors/Edit/5
+        // POST: Medications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,surName,name,middleName,Postid,birthday")] Doctor doctor)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,recipeCheck")] Medication medication)
         {
-            if (id != doctor.id)
+            if (id != medication.id)
             {
                 return NotFound();
             }
@@ -84,12 +81,12 @@ namespace Dental_Clinic.Controllers
             {
                 try
                 {
-                    _context.Update(doctor);
+                    _context.Update(medication);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DoctorExists(doctor.id))
+                    if (!MedicationExists(medication.id))
                     {
                         return NotFound();
                     }
@@ -100,51 +97,53 @@ namespace Dental_Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(medication);
         }
 
-        // GET: Doctors/Delete/5
+        // GET: Medications/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Doctors == null)
+            if (id == null || _context.Medications == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctors
-                .Include(d => d.Post)
+            var medication = await _context.Medications
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (doctor == null)
+            if (medication == null)
             {
                 return NotFound();
             }
 
-            return View(doctor);
+            return View(medication);
         }
 
-        // POST: Doctors/Delete/5
+        // POST: Medications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Doctors == null)
+            if (_context.Medications == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Doctors'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Medications'  is null.");
             }
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor != null)
+            var medication = await _context.Medications.FindAsync(id);
+            if (medication != null)
             {
-                _context.Doctors.Remove(doctor);
+                _context.Medications.Remove(medication);
             }
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch { }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DoctorExists(int id)
+        private bool MedicationExists(int id)
         {
-            return (_context.Doctors?.Any(e => e.id == id)).GetValueOrDefault();
+            return (_context.Medications?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

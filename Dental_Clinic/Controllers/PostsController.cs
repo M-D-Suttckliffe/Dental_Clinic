@@ -7,75 +7,72 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
-using System.Numerics;
 
 namespace Dental_Clinic.Controllers
 {
-    public class DoctorsController : Controller
+    public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public DoctorsController(ApplicationDbContext context)
+        public PostsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Doctors
+        // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Doctors.Where(d => d.isDeleted == false).Include(d => d.Post);
-            return View(await applicationDbContext.ToListAsync());
+            return _context.Posts != null ?
+                        View(await _context.Posts.Where(p => p.isDeleted == false).ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Posts'  is null.");
         }
 
-        // GET: Doctors/Create
+        // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName");
             return View();
         }
 
-        // POST: Doctors/Create
+        // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,surName,name,middleName,Postid,birthday")] Doctor doctor)
+        public async Task<IActionResult> Create([Bind("id,postName,salary")] Post post)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(doctor);
+                _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(post);
         }
 
-        // GET: Doctors/Edit/5
+        // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Doctors == null)
+            if (id == null || _context.Posts == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor == null)
+            var post = await _context.Posts.FindAsync(id);
+            if (post == null)
             {
                 return NotFound();
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(post);
         }
 
-        // POST: Doctors/Edit/5
+        // POST: Posts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,surName,name,middleName,Postid,birthday")] Doctor doctor)
+        public async Task<IActionResult> Edit(int id, [Bind("id,postName,salary")] Post post)
         {
-            if (id != doctor.id)
+            if (id != post.id)
             {
                 return NotFound();
             }
@@ -84,12 +81,12 @@ namespace Dental_Clinic.Controllers
             {
                 try
                 {
-                    _context.Update(doctor);
+                    _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DoctorExists(doctor.id))
+                    if (!PostExists(post.id))
                     {
                         return NotFound();
                     }
@@ -100,51 +97,53 @@ namespace Dental_Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Postid"] = new SelectList(_context.Posts, "id", "postName", doctor.Postid);
-            return View(doctor);
+            return View(post);
         }
 
-        // GET: Doctors/Delete/5
+        // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Doctors == null)
+            if (id == null || _context.Posts == null)
             {
                 return NotFound();
             }
 
-            var doctor = await _context.Doctors
-                .Include(d => d.Post)
+            var post = await _context.Posts
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (doctor == null)
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(doctor);
+            return View(post);
         }
 
-        // POST: Doctors/Delete/5
+        // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Doctors == null)
+            if (_context.Posts == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Doctors'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Posts'  is null.");
             }
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor != null)
+            var post = await _context.Posts.FindAsync(id);
+            if (post != null)
             {
-                _context.Doctors.Remove(doctor);
+                _context.Posts.Remove(post);
             }
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch {}
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DoctorExists(int id)
+        private bool PostExists(int id)
         {
-            return (_context.Doctors?.Any(e => e.id == id)).GetValueOrDefault();
+            return (_context.Posts?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

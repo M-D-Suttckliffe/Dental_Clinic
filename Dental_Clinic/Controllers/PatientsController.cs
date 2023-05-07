@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dental_Clinic.Controllers
 {
@@ -18,41 +20,31 @@ namespace Dental_Clinic.Controllers
         {
             _context = context;
         }
+        public class GenderName
+        {
+            public int id { get; set; }
+            public string genderName { get; set; }
+        }
+        List<GenderName> genderNames = new List<GenderName>();
 
         // GET: Patients
         public async Task<IActionResult> Index()
         {
             return _context.Patients != null ?
-                        View(await _context.Patients.ToListAsync()) :
+                        View(await _context.Patients.Where(p => p.isDeleted == false).ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.Patients'  is null.");
         }
-
-        // GET: Patients/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Patients == null)
-            {
-                return NotFound();
-            }
-
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            return View(patient);
-        }
-
+        
         // GET: Patients/Create
         public IActionResult Create()
         {
             ViewData["gender"] = new SelectList(new[]
             {
-                new SelectListItem(){Text="Мужской", Value="0"},
-                new SelectListItem(){Text="Женский", Value="1"}
+                new SelectListItem("Не указано", "2"),
+                new SelectListItem("Мужской", "0"),
+                new SelectListItem("Женский", "1")
             }, "Value", "Text");
+            //ViewData["gender"] = new SelectList(genders, "id", "name");
             return View();
         }
 
@@ -71,8 +63,9 @@ namespace Dental_Clinic.Controllers
             }
             ViewData["gender"] = new SelectList(new[]
             {
-                new SelectListItem(){Text="Мужской", Value="0"},
-                new SelectListItem(){Text="Женский", Value="1"}
+                new SelectListItem("Не указано", "2"),
+                new SelectListItem("Мужской", "0"),
+                new SelectListItem("Женский", "1")
             }, "Value", "Text", patient.gender);
             return View(patient);
         }
@@ -90,6 +83,12 @@ namespace Dental_Clinic.Controllers
             {
                 return NotFound();
             }
+            ViewData["gender"] = new SelectList(new[]
+            {
+                new SelectListItem("Не указано", "2"),
+                new SelectListItem("Мужской", "0"),
+                new SelectListItem("Женский", "1")
+            }, "Value", "Text", patient.gender);
             return View(patient);
         }
 
@@ -125,6 +124,12 @@ namespace Dental_Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["gender"] = new SelectList(new[]
+            {
+                new SelectListItem("Не указано", "2"),
+                new SelectListItem("Мужской", "0"),
+                new SelectListItem("Женский", "1")
+            }, "Value", "Text", patient.gender);
             return View(patient);
         }
 
@@ -160,8 +165,12 @@ namespace Dental_Clinic.Controllers
             {
                 _context.Patients.Remove(patient);
             }
-
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch {}
+            
             return RedirectToAction(nameof(Index));
         }
 

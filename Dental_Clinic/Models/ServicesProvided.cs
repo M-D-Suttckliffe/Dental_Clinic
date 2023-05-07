@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Dental_Clinic.Models
@@ -8,14 +9,17 @@ namespace Dental_Clinic.Models
         [Key]
         public int id { get; set; }
         [Browsable(false)]
+        [DisplayName("Посещение")]
         public int Visitid { get; set; }
         [Browsable(false)]
-        public int Doctorid { get; set; }
-        [Browsable(false)]
+        [DisplayName("Услуга")]
         public int MedServiceid { get; set; }
+        [ValidateNever]
+        public bool isDeleted { get; set; }
 
-        public Doctor Doctor { get; set; } = null!;
+        [DisplayName("Посещения")]
         public Visit Visit { get; set; } = null!;
+        [DisplayName("Услуги")]
         public MedService MedService { get; set; } = null!;
     }
 }
