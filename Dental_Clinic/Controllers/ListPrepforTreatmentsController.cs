@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
 
-namespace Dental_Clinic.Views
+namespace Dental_Clinic.Controllers
 {
     public class ListPrepforTreatmentsController : Controller
     {
@@ -146,13 +146,13 @@ namespace Dental_Clinic.Views
             {
                 await _context.SaveChangesAsync();
             }
-            catch {}
+            catch { }
             return RedirectToAction(nameof(Index));
         }
 
         private bool ListPrepforTreatmentExists(int id)
         {
-          return (_context.ListPrepforTreatments?.Any(e => e.id == id)).GetValueOrDefault();
+            return (_context.ListPrepforTreatments?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

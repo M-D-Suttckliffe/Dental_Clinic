@@ -1,12 +1,12 @@
 ﻿@model Dental_Clinic.Models.Visit
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "CreateMedCard";
 }
 
 <h1>Добавление</h1>
 
-<h4>Посещения</h4>
+<h4>Медицинская запись</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,5 +41,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

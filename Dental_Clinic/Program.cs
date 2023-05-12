@@ -9,13 +9,8 @@ builder.Services.AddControllersWithViews();
 
 string DecryptConnectionString()
 {
-
     Byte[] b = Convert.FromBase64String(builder.Configuration.GetConnectionString("DefaultConnection"));
-
-    string decryptedConnectionString = System.Text.ASCIIEncoding.ASCII.GetString(b);
-
-    return decryptedConnectionString;
-
+    return System.Text.ASCIIEncoding.ASCII.GetString(b);
 }
 
 // Register ApplicationDbContext
