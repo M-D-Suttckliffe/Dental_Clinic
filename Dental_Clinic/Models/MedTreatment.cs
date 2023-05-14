@@ -16,7 +16,7 @@ namespace Dental_Clinic.Models
         [ValidateNever]
         public bool isDeleted { get; set; }
 
-        public List<ListPrepforTreatment> ListPrepforTreatments = new List<ListPrepforTreatment>();
+        public List<ListPrepforTreatment> listPrepforTreatments = new List<ListPrepforTreatment>();
         [DisplayName("Посещения")]
         public List<Visit> Visits { get; set; } = new List<Visit>();
         [DisplayName("Болезни")]

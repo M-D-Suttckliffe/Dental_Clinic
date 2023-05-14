@@ -35,5 +35,7 @@ namespace Dental_Clinic.Models
         public Doctor Doctor { get; set; } = null!;
         [DisplayName("Лечение")]
         public MedTreatment MedTreatment { get; set; } = null!;
+        [DisplayName("Список предоставленных услуг")]
+        public List<ServicesProvided> servicesProvideds { get; set; } = new List<ServicesProvided>();
     }
 }
