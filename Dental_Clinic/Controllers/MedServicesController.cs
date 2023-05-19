@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize(Roles = "Doctor, HeadDoctor")]
     public class MedServicesController : Controller
     {
         private readonly ApplicationDbContext _context;

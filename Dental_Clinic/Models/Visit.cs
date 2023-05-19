@@ -29,10 +29,13 @@ namespace Dental_Clinic.Models
         [ValidateNever]
         public bool isDeleted { get; set; }
 
+        [ValidateNever]
         [DisplayName("Пациент")]
         public Patient Patient { get; set; } = null!;
+        [ValidateNever]
         [DisplayName("Врач")]
         public Doctor Doctor { get; set; } = null!;
+        [ValidateNever]
         [DisplayName("Лечение")]
         public MedTreatment MedTreatment { get; set; } = null!;
         [DisplayName("Список предоставленных услуг")]

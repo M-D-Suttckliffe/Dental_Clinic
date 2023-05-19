@@ -1,0 +1,48 @@
+﻿@model  Dental_Clinic.Models.Login
+
+@{ 
+    Layout = "_Authorization";
+}
+
+<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+    <section class="vh-100" >
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div class="container py-5 h-100" style="margin-left: auto;">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                    <h3 class="mb-5">Sign in</h3>
+                    <div class="form-group">
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="login" placeholder="Логин" class="form-control form-control-lg" />
+                            <span asp-validation-for="login" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" asp-for="Password" placeholder="Пароль" class="form-control form-control-lg" />
+                            <span asp-validation-for="Password" />
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-start mb-4">
+                            <input class="form-check-input" type="checkbox" asp-for="isRemember" />
+                            <label class="form-check-label" asp-for="isRemember"> Запомнить пароль </label>
+                            <span asp-validation-for="isRemember" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Войти" class="btn btn-primary btn-lg btn-block" style="width: 100%;" />
+                    </div>
+                    <hr class="my-4">
+
+                    <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39; width: 100%;" 
+                        asp-controller="Account" asp-action="Register">Зарегистрироваться</button> 
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

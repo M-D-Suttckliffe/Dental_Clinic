@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Dental_Clinic.Data.Migrations
+namespace Dental_Clinic.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialmigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    diagnosisName = table.Column<string>(type: "character varying(250)", nullable: false)
+                    diagnosisName = table.Column<string>(type: "text", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,8 +32,9 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(90)", nullable: false),
-                    recipeCheck = table.Column<bool>(type: "boolean", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
+                    recipeCheck = table.Column<bool>(type: "boolean", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,8 +47,9 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(90)", nullable: false),
-                    price = table.Column<int>(type: "numeric(10,4)", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
+                    price = table.Column<int>(type: "integer", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,13 +62,16 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    surName = table.Column<string>(type: "character varying(30)", nullable: false),
-                    name = table.Column<string>(type: "character varying(30)", nullable: false),
-                    middleName = table.Column<string>(type: "character varying(30)", nullable: true),
-                    birthday = table.Column<DateTime>(type: "date", nullable: false),
+                    surName = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    middleName = table.Column<string>(type: "text", nullable: false),
+                    birthday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     gender = table.Column<short>(type: "smallint", nullable: false),
-                    phoneNumber = table.Column<string>(type: "character varying(12)", nullable: false),
-                    address = table.Column<string>(type: "character varying(250)", nullable: false)
+                    phoneNumber = table.Column<string>(type: "text", nullable: false),
+                    address = table.Column<string>(type: "text", nullable: false),
+                    login = table.Column<string>(type: "text", nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,8 +84,9 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    postName = table.Column<string>(type: "character varying(90)", nullable: false),
-                    salary = table.Column<int>(type: "numeric(10,4)", nullable: false)
+                    postName = table.Column<string>(type: "text", nullable: false),
+                    salary = table.Column<int>(type: "integer", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,7 +100,8 @@ namespace Dental_Clinic.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Diagnosid = table.Column<int>(type: "integer", nullable: false),
-                    treatmentName = table.Column<string>(type: "character varying(250)", nullable: false)
+                    treatmentName = table.Column<string>(type: "text", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,11 +120,14 @@ namespace Dental_Clinic.Data.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    surName = table.Column<string>(type: "character varying(30)", nullable: false),
-                    name = table.Column<string>(type: "character varying(30)", nullable: false),
-                    middleName = table.Column<string>(type: "character varying(30)", nullable: true),
+                    surName = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    middleName = table.Column<string>(type: "text", nullable: false),
                     Postid = table.Column<int>(type: "integer", nullable: false),
-                    birthday = table.Column<DateTime>(type: "date", nullable: false)
+                    birthday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    login = table.Column<string>(type: "text", nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,7 +148,8 @@ namespace Dental_Clinic.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MedTreatmentid = table.Column<int>(type: "integer", nullable: false),
                     Medicationid = table.Column<int>(type: "integer", nullable: false),
-                    amountMedications = table.Column<string>(type: "character varying(255)", nullable: false)
+                    amountMedications = table.Column<string>(type: "text", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,11 +176,20 @@ namespace Dental_Clinic.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Patientid = table.Column<int>(type: "integer", nullable: false),
                     MedTreatmentid = table.Column<int>(type: "integer", nullable: false),
-                    dateVisit = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    Doctorid = table.Column<int>(type: "integer", nullable: false),
+                    dateVisit = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    status = table.Column<short>(type: "smallint", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Visits", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Visits_Doctors_Doctorid",
+                        column: x => x.Doctorid,
+                        principalTable: "Doctors",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Visits_MedTreatments_MedTreatmentid",
                         column: x => x.MedTreatmentid,
@@ -190,18 +211,12 @@ namespace Dental_Clinic.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Visitid = table.Column<int>(type: "integer", nullable: false),
-                    Doctorid = table.Column<int>(type: "integer", nullable: false),
-                    MedServiceid = table.Column<int>(type: "integer", nullable: false)
+                    MedServiceid = table.Column<int>(type: "integer", nullable: false),
+                    isDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServicesProvideds", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ServicesProvideds_Doctors_Doctorid",
-                        column: x => x.Doctorid,
-                        principalTable: "Doctors",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ServicesProvideds_MedServices_MedServiceid",
                         column: x => x.MedServiceid,
@@ -237,11 +252,6 @@ namespace Dental_Clinic.Data.Migrations
                 column: "Diagnosid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServicesProvideds_Doctorid",
-                table: "ServicesProvideds",
-                column: "Doctorid");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ServicesProvideds_MedServiceid",
                 table: "ServicesProvideds",
                 column: "MedServiceid");
@@ -250,6 +260,11 @@ namespace Dental_Clinic.Data.Migrations
                 name: "IX_ServicesProvideds_Visitid",
                 table: "ServicesProvideds",
                 column: "Visitid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_Doctorid",
+                table: "Visits",
+                column: "Doctorid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visits_MedTreatmentid",
@@ -275,22 +290,22 @@ namespace Dental_Clinic.Data.Migrations
                 name: "Medications");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
-
-            migrationBuilder.DropTable(
                 name: "MedServices");
 
             migrationBuilder.DropTable(
                 name: "Visits");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "MedTreatments");
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Diagnosis");

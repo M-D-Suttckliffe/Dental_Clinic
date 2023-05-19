@@ -12,17 +12,30 @@
     <link rel="stylesheet" href="~/Dental_Clinic.styles.css" asp-append-version="true" />
 
     <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <meta name="theme-color" content="#712cf9">
-
-    <!-- Custom styles for this template -->
+    <meta name="theme-color" content="#712cf9"> 
     
 </head>
 <body>
-    <header>
-        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-            <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-            <span class="fs-5 fw-semibold">СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА</span>
-        </a>
+    <header class="p-3 bg-dark text-white">
+        <div class="">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            @*<a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">*@
+            @*<svg class="bi pe-none me-2" width="30" height="24"></svg>*@
+            <span class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">СТОМАТОЛОГИЧЕСКАЯ КЛИНИКА</span>
+            </a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                        <a type="button" class="btn btn-outline-light me-2">Здравствуйте @User.Identity?.Name!</a>
+                <a asp-controller="Account" asp-action="Logout" type="button" class="btn btn-primary">Выход</a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-outline-light me-2">Войти</a>
+                <a asp-controller="Account" asp-action="Register" type="button" class="btn btn-primary">Регистрация</a>
+            }
+            </div>
+            
+        </div>
     </header>
     <div class="container">
         <main role="main" class="d-flex flex-nowrap">
@@ -35,61 +48,75 @@
                         </button>
                         <div class="collapse show" id="dashboard-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Diagnos" asp-action="Index">Диагнозы</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Visits" asp-action="Index">Посещения</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Index">Врачи</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patients" asp-action="Index">Пациенты</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Medications" asp-action="Index">Препараты</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="MedServices" asp-action="Index">Услуги</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="MedTreatments" asp-action="Index">Типы лечений</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">Должности</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvideds" asp-action="Index">Предоставленные услуги</a>
-                                </li>
+                                @if (User.IsInRole("Patient") || User.IsInRole("Doctor") || User.IsInRole("HeadDoctor"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Visits" asp-action="Index">Посещения</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("Doctor") || User.IsInRole("HeadDoctor"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Diagnos" asp-action="Index">Диагнозы</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Medications" asp-action="Index">Препараты</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Patients" asp-action="Index">Пациенты</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="MedTreatments" asp-action="Index">Типы лечений</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvideds" asp-action="Index">Предоставленные услуги</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="ListPrepforTreatments" asp-action="Index">Список лекарств</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("HeadDoctor"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Index">Врачи</a>
+                                    </li>                                
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="MedServices" asp-action="Index">Услуги</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">Должности</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                            Мед Карты
-                        </button>
-                        <div class="collapse" id="orders-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="MedCards" asp-action="Create">Добавить запись</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="MedCards" asp-action="Index">Просмотреть записи</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    @if (User.IsInRole("Doctor") || User.IsInRole("HeadDoctor"))
+                    {
+                        <li class="mb-1">
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                                Мед Карты
+                            </button>
+                            <div class="collapse" id="orders-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="MedCards" asp-action="Create">Добавить запись</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="MedCards" asp-action="Index">Просмотреть записи</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
                     <li class="border-top my-3"></li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                            Account
+                            Аккаунт
                         </button>
                         <div class="collapse" id="account-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
                                 <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
                                 <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
                             </ul>
                         </div>
@@ -103,11 +130,11 @@
         </main>
     </div>
 
-    @*<footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - Dental_Clinic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>*@
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

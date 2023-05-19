@@ -30,7 +30,14 @@ namespace Dental_Clinic.Models
         [DisplayName("Адрес")]
         public string address { get; set; } = null!;
         [ValidateNever]
+        [DisplayName("Логин")]
+        public string login { get; set; } = null!;
+        [ValidateNever]
+        [DisplayName("Пароль")]
+        public string password { get; set; } = null!;
+        [ValidateNever]
         public bool isDeleted { get; set; }
+        [ValidateNever]
         public List<Visit> Visits { get; set; } = new List<Visit>();
     }
 }

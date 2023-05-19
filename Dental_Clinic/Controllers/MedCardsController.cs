@@ -1,12 +1,15 @@
 ﻿using Dental_Clinic.Context;
 using Dental_Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize(Roles = "Doctor, HeadDoctor")]
     public class MedCardsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,6 +38,7 @@ namespace Dental_Clinic.Controllers
             ViewData["Patientid"] = new SelectList(_context.Patients, "id", "fullName");
             ViewData["Diagnosid"] = new SelectList(_context.Diagnosis, "id", "diagnosisName");
             ViewData["Medicationid"] = new SelectList(_context.Medications, "id", "name");
+            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "name");
             return View();
         }
 

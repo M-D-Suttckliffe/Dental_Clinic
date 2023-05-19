@@ -17,8 +17,10 @@ namespace Dental_Clinic.Models
         [ValidateNever]
         public bool isDeleted { get; set; }
 
+        [ValidateNever]
         [DisplayName("Посещения")]
         public Visit Visit { get; set; } = null!;
+        [ValidateNever]
         [DisplayName("Услуги")]
         public MedService MedService { get; set; } = null!;
     }

@@ -9,9 +9,12 @@ using Dental_Clinic.Context;
 using Dental_Clinic.Models;
 using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize(Roles = "Doctor, HeadDoctor")]
     public class PatientsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +23,6 @@ namespace Dental_Clinic.Controllers
         {
             _context = context;
         }
-        public class GenderName
-        {
-            public int id { get; set; }
-            public string genderName { get; set; }
-        }
-        List<GenderName> genderNames = new List<GenderName>();
 
         // GET: Patients
         public async Task<IActionResult> Index()

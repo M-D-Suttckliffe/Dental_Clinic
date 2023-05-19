@@ -3,17 +3,20 @@ using System;
 using Dental_Clinic.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Dental_Clinic.Data.Migrations
+namespace Dental_Clinic.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230519102222_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +37,9 @@ namespace Dental_Clinic.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
                     b.HasKey("id");
 
                     b.ToTable("Diagnosis");
@@ -53,11 +59,22 @@ namespace Dental_Clinic.Data.Migrations
                     b.Property<DateTime>("birthday")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("middleName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -90,6 +107,9 @@ namespace Dental_Clinic.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
                     b.HasKey("id");
 
                     b.HasIndex("MedTreatmentid");
@@ -106,6 +126,9 @@ namespace Dental_Clinic.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -130,10 +153,10 @@ namespace Dental_Clinic.Data.Migrations
                     b.Property<int>("Diagnosid")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Diagnosisid")
-                        .HasColumnType("integer");
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("diagnosName")
+                    b.Property<string>("treatmentName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -151,6 +174,9 @@ namespace Dental_Clinic.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -182,11 +208,22 @@ namespace Dental_Clinic.Data.Migrations
                     b.Property<short>("gender")
                         .HasColumnType("smallint");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("middleName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -211,6 +248,9 @@ namespace Dental_Clinic.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("postName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -231,18 +271,16 @@ namespace Dental_Clinic.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Doctorid")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MedServiceid")
                         .HasColumnType("integer");
 
                     b.Property<int>("Visitid")
                         .HasColumnType("integer");
 
-                    b.HasKey("id");
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
 
-                    b.HasIndex("Doctorid");
+                    b.HasKey("id");
 
                     b.HasIndex("MedServiceid");
 
@@ -259,6 +297,9 @@ namespace Dental_Clinic.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
+                    b.Property<int>("Doctorid")
+                        .HasColumnType("integer");
+
                     b.Property<int>("MedTreatmentid")
                         .HasColumnType("integer");
 
@@ -268,7 +309,15 @@ namespace Dental_Clinic.Data.Migrations
                     b.Property<DateTime>("dateVisit")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<short>("status")
+                        .HasColumnType("smallint");
+
                     b.HasKey("id");
+
+                    b.HasIndex("Doctorid");
 
                     b.HasIndex("MedTreatmentid");
 
@@ -320,12 +369,6 @@ namespace Dental_Clinic.Data.Migrations
 
             modelBuilder.Entity("Dental_Clinic.Models.ServicesProvided", b =>
                 {
-                    b.HasOne("Dental_Clinic.Models.Doctor", "Doctor")
-                        .WithMany("ServicesProvideds")
-                        .HasForeignKey("Doctorid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dental_Clinic.Models.MedService", "MedService")
                         .WithMany()
                         .HasForeignKey("MedServiceid")
@@ -333,12 +376,10 @@ namespace Dental_Clinic.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Dental_Clinic.Models.Visit", "Visit")
-                        .WithMany()
+                        .WithMany("servicesProvideds")
                         .HasForeignKey("Visitid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("MedService");
 
@@ -347,6 +388,12 @@ namespace Dental_Clinic.Data.Migrations
 
             modelBuilder.Entity("Dental_Clinic.Models.Visit", b =>
                 {
+                    b.HasOne("Dental_Clinic.Models.Doctor", "Doctor")
+                        .WithMany("Visits")
+                        .HasForeignKey("Doctorid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Dental_Clinic.Models.MedTreatment", "MedTreatment")
                         .WithMany("Visits")
                         .HasForeignKey("MedTreatmentid")
@@ -359,6 +406,8 @@ namespace Dental_Clinic.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Doctor");
+
                     b.Navigation("MedTreatment");
 
                     b.Navigation("Patient");
@@ -366,7 +415,7 @@ namespace Dental_Clinic.Data.Migrations
 
             modelBuilder.Entity("Dental_Clinic.Models.Doctor", b =>
                 {
-                    b.Navigation("ServicesProvideds");
+                    b.Navigation("Visits");
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.MedTreatment", b =>
@@ -377,6 +426,11 @@ namespace Dental_Clinic.Data.Migrations
             modelBuilder.Entity("Dental_Clinic.Models.Patient", b =>
                 {
                     b.Navigation("Visits");
+                });
+
+            modelBuilder.Entity("Dental_Clinic.Models.Visit", b =>
+                {
+                    b.Navigation("servicesProvideds");
                 });
 #pragma warning restore 612, 618
         }

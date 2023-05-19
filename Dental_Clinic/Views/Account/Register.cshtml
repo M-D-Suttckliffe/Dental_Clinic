@@ -1,0 +1,82 @@
+﻿@model Dental_Clinic.Models.Register
+
+@{ 
+    Layout = "_Authorization";
+}
+
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+    <section class="vh-100" >
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div class="container py-5 h-100" style="margin-left: auto;">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                    <h3 class="mb-5">Sign up</h3>
+                    <div class="form-group">
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="Login" placeholder="Логин" class="form-control form-control-lg" />
+                            <span asp-validation-for="Login" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" asp-for="Password" placeholder="Пароль" class="form-control form-control-lg" />
+                            <span asp-validation-for="Password" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" asp-for="ConfirmPassword" placeholder="Подтвердите пароль" class="form-control form-control-lg" />
+                            <span asp-validation-for="ConfirmPassword" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="surName" asp-for="surName" placeholder="Фамилия" class="form-control form-control-lg" />
+                            <span asp-validation-for="surName" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="name" asp-for="name" placeholder="Имя" class="form-control form-control-lg" />
+                            <span asp-validation-for="name" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="middleName" asp-for="middleName" placeholder="Отчество" class="form-control form-control-lg" />
+                            <span asp-validation-for="middleName" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label asp-for="gender" class="control-label form-control-lg"></label>
+                            <select asp-for="gender" class ="form-control" asp-items="ViewBag.gender"></select>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label asp-for="birthday" class="control-label form-control-lg"></label>
+                            <input asp-for="birthday" class="form-control form-control-lg" />
+                            <span asp-validation-for="birthday" class="text-danger"/>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input asp-for="phoneNumber" placeholder="Телефон" class="form-control form-control-lg" />
+                            <span asp-validation-for="phoneNumber" class="text-danger"/>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input asp-for="address" placeholder="Адрес" class="form-control form-control-lg" />
+                            <span asp-validation-for="address" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Зарегистрироваться" class="btn btn-primary btn-lg btn-block" style="width: 100%;" />
+                    </div>
+                    <hr class="my-4">
+
+                    <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39; width: 100%;" 
+                        asp-controller="Account" asp-action="Login">Авторизация</button> 
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

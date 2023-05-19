@@ -20,6 +20,7 @@ namespace Dental_Clinic.Models
         [DisplayName("Посещения")]
         public List<Visit> Visits { get; set; } = new List<Visit>();
         [DisplayName("Болезни")]
+        [ValidateNever]
         public Diagnos Diagnos { get; set; } = null!;
     }
 }

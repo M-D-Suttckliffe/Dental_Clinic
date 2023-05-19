@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize(Roles = "Doctor, HeadDoctor")]
     public class ServicesProvidedsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,8 +32,8 @@ namespace Dental_Clinic.Controllers
         // GET: ServicesProvideds/Create
         public IActionResult Create()
         {
-            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "id");
-            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "id");
+            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "name");
+            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "dateVisit");
             return View();
         }
 
@@ -47,8 +50,8 @@ namespace Dental_Clinic.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "id", servicesProvided.MedServiceid);
-            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "id", servicesProvided.Visitid);
+            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "name", servicesProvided.MedServiceid);
+            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "dateVisit", servicesProvided.Visitid);
             return View(servicesProvided);
         }
 
@@ -65,8 +68,8 @@ namespace Dental_Clinic.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "id", servicesProvided.MedServiceid);
-            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "id", servicesProvided.Visitid);
+            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "name", servicesProvided.MedServiceid);
+            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "dateVisit", servicesProvided.Visitid);
             return View(servicesProvided);
         }
 
@@ -102,8 +105,8 @@ namespace Dental_Clinic.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "id", servicesProvided.MedServiceid);
-            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "id", servicesProvided.Visitid);
+            ViewData["MedServiceid"] = new SelectList(_context.MedServices, "id", "name", servicesProvided.MedServiceid);
+            ViewData["Visitid"] = new SelectList(_context.Visits, "id", "dateVisit", servicesProvided.Visitid);
             return View(servicesProvided);
         }
 

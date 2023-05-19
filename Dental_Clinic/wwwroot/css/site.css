@@ -41,6 +41,14 @@ div.container {
     display: inline-block;
     width: 90%;
 }
+.mar15per{
+    margin-left: 15%;
+}
+
+.alig{
+    text-align: right;
+    margin-right: 15%;
+}
 
 .mar15{
     margin-top: 15px;

@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize(Roles = "Doctor, HeadDoctor")]
     public class DoctorsController : Controller
     {
         private readonly ApplicationDbContext _context;

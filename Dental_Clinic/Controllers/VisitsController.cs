@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dental_Clinic.Context;
 using Dental_Clinic.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dental_Clinic.Controllers
 {
+    [Authorize]
     public class VisitsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +23,11 @@ namespace Dental_Clinic.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if(User.IsInRole("Patient"))
+            {
+                var applicationDbContextPat = _context.Visits.Where(v => v.isDeleted == false && v.Patient.login == User.Identity.Name).Include(v => v.Doctor).Include(v => v.MedTreatment).Include(v => v.Patient);
+                return View(await applicationDbContextPat.ToListAsync());
+            }
             var applicationDbContext = _context.Visits.Where(v => v.isDeleted == false).Include(v => v.Doctor).Include(v => v.MedTreatment).Include(v => v.Patient);
             return View(await applicationDbContext.ToListAsync());
         }

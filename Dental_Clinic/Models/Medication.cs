@@ -10,7 +10,7 @@ namespace Dental_Clinic.Models
         public int id { get; set; }
         [DisplayName("Название Лекарства")]
         public string name { get; set; } = null!;
-        [DisplayName("Цена")]
+        [DisplayName("По рецепту")]
         [UIHint("Boolean")]
         public Boolean recipeCheck { get; set; }
         [ValidateNever]

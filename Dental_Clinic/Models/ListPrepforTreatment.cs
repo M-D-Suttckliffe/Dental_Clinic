@@ -18,9 +18,10 @@ namespace Dental_Clinic.Models
         public string amountMedications { get; set; } = null!;
         [ValidateNever]
         public bool isDeleted { get; set; }
-
+        [ValidateNever]
         [DisplayName("Лекарства")]
         public Medication Medication { get; set; } = null!;
+        [ValidateNever]
         [DisplayName("Лечения")]
         public MedTreatment MedTreatment { get; set; } = null!;
     }
