@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Dental_Clinic.Models
 {
+    [DataContract]
     public class ServicesProvided
     {
+        [DataMember]
         [Key]
         public int id { get; set; }
         [Browsable(false)]
@@ -20,6 +23,7 @@ namespace Dental_Clinic.Models
         [ValidateNever]
         [DisplayName("Посещения")]
         public Visit Visit { get; set; } = null!;
+        [DataMember]
         [ValidateNever]
         [DisplayName("Услуги")]
         public MedService MedService { get; set; } = null!;

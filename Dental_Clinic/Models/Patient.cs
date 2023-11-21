@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Dental_Clinic.Models
 {
+    [DataContract]
     public class Patient
     {
+        [DataMember]
         [Key]
         public int id { get; set; }
         [DisplayName("Фамилия")]
@@ -14,6 +17,7 @@ namespace Dental_Clinic.Models
         public string name { get; set; } = null!;
         [DisplayName("Отчество")]
         public string middleName { get; set; } = null!;
+        [DataMember]
         [DisplayName("ФИО")]
         public string fullName => $"{surName} {name} {middleName}";
         [DisplayName("День Рождения")]

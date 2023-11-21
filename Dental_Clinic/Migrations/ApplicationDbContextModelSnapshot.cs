@@ -39,7 +39,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Diagnosis");
+                    b.ToTable("Diagnosis", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Doctor", b =>
@@ -83,7 +83,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasIndex("Postid");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.ListPrepforTreatment", b =>
@@ -113,7 +113,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasIndex("Medicationid");
 
-                    b.ToTable("ListPrepforTreatments");
+                    b.ToTable("ListPrepforTreatments", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.MedService", b =>
@@ -136,7 +136,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("MedServices");
+                    b.ToTable("MedServices", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.MedTreatment", b =>
@@ -161,7 +161,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasIndex("Diagnosid");
 
-                    b.ToTable("MedTreatments");
+                    b.ToTable("MedTreatments", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Medication", b =>
@@ -184,7 +184,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Medications");
+                    b.ToTable("Medications", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Patient", b =>
@@ -234,7 +234,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Post", b =>
@@ -257,7 +257,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.ServicesProvided", b =>
@@ -283,7 +283,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasIndex("Visitid");
 
-                    b.ToTable("ServicesProvideds");
+                    b.ToTable("ServicesProvideds", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Visit", b =>
@@ -320,7 +320,7 @@ namespace Dental_Clinic.Migrations
 
                     b.HasIndex("Patientid");
 
-                    b.ToTable("Visits");
+                    b.ToTable("Visits", (string)null);
                 });
 
             modelBuilder.Entity("Dental_Clinic.Models.Doctor", b =>

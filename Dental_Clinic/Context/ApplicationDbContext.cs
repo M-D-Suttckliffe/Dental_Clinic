@@ -10,7 +10,7 @@ namespace Dental_Clinic.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            
         }
 
         public DbSet<Doctor> Doctors { get; set; }
@@ -23,5 +23,16 @@ namespace Dental_Clinic.Context
         public DbSet<Diagnos> Diagnosis { get; set; }
         public DbSet<ListPrepforTreatment> ListPrepforTreatments { get; set; }
         public DbSet<MedTreatment> MedTreatments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDbFunction(typeof(ApplicationDbContext).GetMethod(nameof(BillServicesProvided), new[] { typeof(int) }))
+                .HasName("GetBillServicesprovided");
+        }
+        public int BillServicesProvided(int visitId)
+        {
+            throw new NotSupportedException();
+        }
+
     }
 }

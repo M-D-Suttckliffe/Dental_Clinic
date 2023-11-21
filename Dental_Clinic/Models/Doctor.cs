@@ -2,11 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Dental_Clinic.Models
 {
+    [DataContract]
     public class Doctor
     {
+        [DataMember]
         [Key]
         public int id { get; set; }
         [DisplayName("Фамилия")]
@@ -15,6 +18,7 @@ namespace Dental_Clinic.Models
         public string name { get; set; } = null!;
         [DisplayName("Отчество")]
         public string middleName { get; set; } = null!;
+        [DataMember]
         [DisplayName("ФИО")]
         [ValidateNever]
         public string fullName => $"{surName} {name} {middleName}";

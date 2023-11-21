@@ -6,6 +6,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Dental_Clinic.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Dental_Clinic.Controllers
 {
@@ -27,8 +29,13 @@ namespace Dental_Clinic.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            int cr = 1;
-            var c = _context.Database.SqlQueryRaw<int>("public.get_bill_servicesprovided(1, null)", cr);
+            //int cr = 2;
+            //var cout = new Microsoft.Data.SqlClient.SqlParameter("sp_bill", System.Data.SqlDbType.Int);
+            //cout.Direction = System.Data.ParameterDirection.Output;
+            //var c =  _context.Database.SqlQuery<int>($"SELECT GetBillServicesprovided(2)");
+
+
+
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
             return View();
