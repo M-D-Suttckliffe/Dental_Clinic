@@ -10,6 +10,8 @@ using System.Data;
 using System.Xml.Linq;
 using System.Xml;
 using Newtonsoft.Json;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Dental_Clinic.Controllers
 {
@@ -102,12 +104,34 @@ namespace Dental_Clinic.Controllers
             return File(ms, "text/xml", "Visits.xml");
         }
         [HttpGet]
-        public IActionResult CreateFileJSON()
+        public IActionResult VisitInformation()
         {
             var visits = _context.Visits.Where(v => v.isDeleted == false).Include(v => v.servicesProvideds).ThenInclude(m => m.MedService).Include(v => v.Doctor).Include(v => v.MedTreatment).Include(v => v.Patient);
             var json = JsonConvert.SerializeObject(visits, Newtonsoft.Json.Formatting.Indented);
 
             return Ok(json);
+        }
+        [HttpGet]
+        public IActionResult CreateFileJSON()
+        {
+            var visits = _context.Visits.Where(v => v.isDeleted == false).Include(v => v.servicesProvideds).ThenInclude(m => m.MedService).Include(v => v.Doctor).Include(v => v.MedTreatment).Include(v => v.Patient);
+            var json = JsonConvert.SerializeObject(visits, Newtonsoft.Json.Formatting.Indented);
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Me", "m.d.suttckliffe@gmail.com"));
+            message.To.Add(new MailboxAddress("FMe", "m.d.suttckliffe@gmail.com"));
+            message.Subject = "Test";
+            message.Body = new TextPart("plain") {Text = json };
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("m.d.suttckliffe@gmail.com", "muzo wzur byhg luct");
+                client.Send(message);
+                
+                client.Disconnect(true);
+            }
+
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> Details(int? id)
         {
