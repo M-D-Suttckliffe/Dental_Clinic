@@ -9,6 +9,10 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.wsuo
+*.suo
+*.vsidx
+Humanizer.resources.dll
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
